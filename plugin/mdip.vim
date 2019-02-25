@@ -71,10 +71,23 @@ function! RandomName()
   return l:new_random
 endfunction
 
+function! GetFileName()
+  call inputsave()
+  let name = input('Enter name: ')
+  call inputrestore()
+
+  if empty(name)
+	  return RandomName()
+  else
+	  return name
+  endif
+
+endfunction
+
 function! mdip#MarkdownClipboardImage()
     let workdir = SafeMakeDir()
     " change temp-file-name and image-name
-    let g:mdip_tmpname = RandomName()
+    let g:mdip_tmpname = GetFileName()
     " let g:mdip_imgname = g:mdip_tmpname
 
     let tmpfile = SaveFileTMP(workdir, g:mdip_tmpname)
